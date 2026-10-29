@@ -17,6 +17,12 @@ streamlit run app.py
 
 ```
 
+## Github Repositories
+```
+https://github.com/ddhiyafauzia/aqiforecast_catboostatt  
+
+```
+
 ## AQI Forecast Dashboard with CatBoost-Att
 ```
 For running the dashboard online: https://aqi-forecast-catboostatt.streamlit.app/
