@@ -1,4 +1,4 @@
-## Spatiotemporal Air Quality Index (AQI) Modeling in DKI Jakarta with Categorical Boosting and Attention Mechanism
+## Air Quality Index (AQI) Forecasting in DKI Jakarta with Categorical Boosting and Attention Mechanism
 
 In densely populated urban areas like DKI Jakarta, air pollution—especially fine particulate matter (PM2.5)—poses serious health risks, contributing to bronchitis, asthma, heart disease, stroke, and even death [1]. The interplay of multiple pollutants, weather variability, traffic emissions, and industrial activities complicates air quality dynamics [2], [13], prompting recent research to treat pollution as a spatiotemporal problem rather than isolated measurements [3], [14]. This approach captures both temporal patterns (e.g., hourly or daily changes) and spatial relationships across monitoring stations. Traditional statistical methods often fail to model these complex, nonlinear patterns, whereas machine learning models like Categorical Boosting handle high-dimensional structured data efficiently using histogram-based binning and a leaf-wise growth strategy [4], [15]. However, Categorical Boosting alone may not effectively prioritize temporal or environmental features unless explicitly guided. To address this, attention mechanisms—originally from natural language processing—are now applied in time series forecasting to emphasize critical features such as sudden weather shifts or pollution spikes [5], [6], [16], [17], [18]. Combining Categorical Boosting with attention improves interpretability and predictive accuracy [6], [9], [10], [19], [20], though many models remain limited to low-resolution data or single-station inputs [7], [21]. This study proposes a hybrid attention–Categorical Boosting framework to model multivariate spatiotemporal correlations of PM2.5 in DKI Jakarta, using hourly climate data from five satellite-derived sources and pollutant data (PM2.5, PM10, NO₂, SO₂, CO, O₃) from five ground stations (2020–2024). An attention mechanism is applied after preprocessing and temporal segmentation to highlight key variables at each timestep, followed by Categorical Boosting to model nonlinear interactions. The method enhances interpretability and forecasting performance, offering insights for data-driven policymaking and urban air quality management.
 
@@ -11,19 +11,17 @@ This research provides accurate assessments of PM2.5 levels across urban areas, 
   
 By linking spatiotemporal correlations between pollutants and weather elements, this approach enhances prediction accuracy and strengthens decision-making for fast-response systems in Jakarta’s most vulnerable areas.
 
-## Setup Environment - Anaconda
-```
-conda env create -f environment.yml
-conda activate aqi-env
-
-```
-
 ## Run steamlit app
 ```
-streamlit run aqidashboard.py
+streamlit run app.py
 
 ```
 
+## AQI Forecast Dashboard with CatBoost-Att
+```
 For running the dashboard online: https://aqi-forecast-catboostatt.streamlit.app/
 
-Copyright © Fauzia Dhiyaa' Farros 2026 - Universitas Sugeng Hartono
+```
+
+
+## Copyright © Fauzia Dhiyaa' Farros 2026 - Universitas Sugeng Hartono
