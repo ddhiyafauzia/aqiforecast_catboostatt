@@ -4,7 +4,7 @@ from __future__ import annotations
 import pandas as pd
 import streamlit as st
 
-from aqi.config import AQI_STATIONS, BASE_DIR, HERO_IMAGE, METEO_STATIONS
+from aqi.config import AQI_STATIONS, METEO_STATIONS
 from aqi.content import (BUSINESS_CLOSING, BUSINESS_PILLARS, BUSINESS_UNDERSTANDING, DATASET_AQI,
                          DATASET_METEO, HOME_FACTS, INTRODUCTION, WHO_REFERENCE)
 from aqi.ui import card_row, interactive_hero, nav, page_header, show_table
@@ -20,10 +20,6 @@ def _introduction() -> None:
     interactive_hero()
     card_row([(label, detail, value) for label, value, detail in HOME_FACTS])
     st.write("")
-
-    photo = BASE_DIR / HERO_IMAGE
-    if photo.exists():
-        st.image(str(photo), caption="View of Jakarta City, DKI Jakarta")
 
     st.markdown(INTRODUCTION)
 

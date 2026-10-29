@@ -4,13 +4,18 @@ from __future__ import annotations
 import pandas as pd
 import streamlit as st
 
-from aqi.config import DATA_FILE, METEO_DIR
-from aqi.data import load_aqi, load_meteorology
+from pathlib import Path
+
+from aqi.config import BASE_DIR, DATA_FILE, METEO_DIR
+from aqi.data import load_aqi, load_meteorology, locate_file
 
 
 @st.cache_data(show_spinner="Loading AQI dataset…")
 def _cached_aqi() -> pd.DataFrame:
-    return load_aqi(DATA_FILE)
+    path = locate_file(DATA_FILE.name, [BASE_DIR, Path.cwd()])
+    if path is None:
+        raise FileNotFoundError(DATA_FILE.name)
+    return load_aqi(path)
 
 
 @st.cache_data(show_spinner="Loading meteorology files…")
@@ -22,7 +27,7 @@ def get_aqi_data() -> pd.DataFrame:
     try:
         return _cached_aqi()
     except FileNotFoundError:
-        st.error(f"File `{DATA_FILE.name}` not found. Put it in the same folder as `app.py`.")
+        st.error(f"File `{DATA_FILE.name}` not found. Looked in `{BASE_DIR}` and `{BASE_DIR / 'data'}`.")
         return pd.DataFrame()
 
 

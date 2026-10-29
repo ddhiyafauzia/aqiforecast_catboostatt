@@ -9,7 +9,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 from aqi import assets, hero, theme
-from aqi.config import AUTHOR, BASE_DIR, PROJECT_TITLE, UNIVERSITY, copyright_line
+from aqi.config import HERO_PHOTO_STEM, LOGO_DIR
 
 
 def inject_css() -> None:
@@ -73,20 +73,13 @@ def show_table(df: pd.DataFrame, **kwargs) -> None:
 
 
 def interactive_hero() -> None:
-    components.html(hero.build_hero_html(), height=760, scrolling=False)
+    page = hero.build_hero_html(photo_uri=assets.photo_data_uri(LOGO_DIR, HERO_PHOTO_STEM),
+                                logos=assets.brand_logos())
+    components.html(page, height=780, scrolling=False)
 
 
 def sidebar_brand() -> None:
-    logos = [assets.data_uri("logo.svg"), assets.university_logo_uri()]
-    jkt = BASE_DIR / "jktlogo.png"
-    if jkt.exists():
-        logos.append(assets.file_data_uri(jkt))
-    imgs = "".join(f'<img src="{uri}" alt="">' for uri in logos)
-    st.markdown(
-        f'<div class="brand"><div class="logos">{imgs}</div>'
-        f'<div class="project">{html.escape(PROJECT_TITLE)}</div><div class="author">{html.escape(AUTHOR)}</div>'
-        f'<div class="meta">{html.escape(UNIVERSITY)}<br>{html.escape(copyright_line())}</div></div>',
-        unsafe_allow_html=True)
+    st.markdown(theme.brand_html(assets.brand_logos()), unsafe_allow_html=True)
     st.divider()
 
 

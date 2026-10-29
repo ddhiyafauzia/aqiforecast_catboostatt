@@ -25,6 +25,20 @@ AQI_RENAME_MAP = {
 }
 
 
+def locate_file(name: str, roots: Iterable[Path]) -> Optional[Path]:
+    """Find ``name`` in each root (or its ``data/`` folder), tolerating case and a hidden double extension."""
+    wanted = name.lower()
+    for root in roots:
+        for folder in (Path(root), Path(root) / "data"):
+            if (folder / name).is_file():
+                return folder / name
+            if folder.is_dir():
+                for candidate in sorted(folder.iterdir()):
+                    if candidate.is_file() and candidate.name.lower().startswith(wanted):
+                        return candidate
+    return None
+
+
 def load_aqi(path: Path) -> pd.DataFrame:
     return pd.read_csv(path, parse_dates=["tanggal"])
 

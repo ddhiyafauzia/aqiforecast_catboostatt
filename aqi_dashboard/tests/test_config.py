@@ -7,10 +7,10 @@ class ConfigTest(unittest.TestCase):
     def test_copyright_year_is_2026(self):
         self.assertEqual(config.COPYRIGHT_YEAR, 2026)
 
-    def test_copyright_line_credits_author_and_university(self):
+    def test_copyright_line_credits_author(self):
         self.assertEqual(
             config.copyright_line(),
-            "© 2026 Fauzia Dhiyaa' Farros - Universitas Sugeng Hartono",
+            "© 2026 Fauzia Dhiyaa' Farros",
         )
 
     def test_station_inventory(self):
@@ -28,3 +28,10 @@ class ConfigTest(unittest.TestCase):
 
     def test_every_aqi_station_has_a_label(self):
         self.assertEqual({s["id"] for s in config.AQI_STATIONS}, set(config.STATION_LABELS))
+
+    def test_brand_logos_in_display_order(self):
+        self.assertEqual([stem for _, stem in config.BRAND_LOGOS], ["intellogo", "ushlogo", "jktlogo"])
+
+    def test_assets_live_under_assets_logo(self):
+        self.assertEqual(config.LOGO_DIR, config.BASE_DIR / "assets" / "logo")
+        self.assertEqual(config.HERO_PHOTO_STEM, "jktimage")

@@ -1,7 +1,10 @@
 """Design tokens, global CSS and Plotly styling. Pure strings/dicts, so it is unit-testable."""
 from __future__ import annotations
 
-from aqi.config import copyright_line
+import html
+from typing import Sequence
+
+from aqi.config import PROJECT_TITLE, AUTHOR, UNIVERSITY, copyright_line
 
 PALETTE = {
     "ink": "#0B1B33", "muted": "#5B6B86", "bg": "#F4F6FB", "surface": "#FFFFFF", "border": "#E3E8F1",
@@ -77,9 +80,12 @@ header[data-testid="stHeader"]{background:transparent}
 [data-testid="stSidebar"] [data-testid="stRadio"] label{width:100%;min-height:44px;border:0;border-radius:12px;background:transparent;padding:8px 14px}
 [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked){background:var(--primary-soft)}
 [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) p{color:var(--primary-dark);font-weight:800}
-.brand .logos{display:flex;align-items:center;gap:10px;margin-bottom:12px}.brand img{height:44px;width:auto;border-radius:10px}
-.brand .project{font-weight:800;font-size:1.05rem}.brand .author{font-size:.82rem;margin-top:2px}
-.brand .meta{font-size:.74rem;color:var(--muted);margin-top:6px;line-height:1.5}
+.brand .logos{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.brand .logos img{height:40px;width:auto;max-width:78px;object-fit:contain;background:#fff;border:1px solid var(--border);
+  border-radius:10px;padding:4px;transition:transform .2s ease,box-shadow .2s ease}
+.brand .logos img:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(11,27,51,.12)}
+.brand .project{font-weight:800;font-size:1.05rem;line-height:1.25}.brand .author{font-size:.86rem;font-weight:600;margin-top:4px}
+.brand .univ{font-size:.82rem;color:var(--muted);margin-top:1px}.brand .meta{font-size:.76rem;color:var(--muted);margin-top:6px}
 
 .lb{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:20px 22px;margin-bottom:1rem}
 .lb h4{margin:0 0 .9rem}.lb-row{margin-bottom:14px}
@@ -123,5 +129,13 @@ def plotly_layout(height: int | None = None) -> dict:
     return layout
 
 
+def brand_html(logos: Sequence[tuple]) -> str:
+    imgs = "".join(f'<img src="{uri}" alt="{html.escape(alt, quote=True)}">' for alt, uri in logos)
+    return (f'<div class="brand"><div class="logos">{imgs}</div>'
+            f'<div class="project">{html.escape(PROJECT_TITLE)}</div><div class="author">{html.escape(AUTHOR)}</div>'
+            f'<div class="univ">{html.escape(UNIVERSITY)}</div><div class="meta">{html.escape(copyright_line())}</div></div>')
+
+
 def footer_html() -> str:
-    return f'<div class="app-footer">{copyright_line()}</div>'
+    text = f"{PROJECT_TITLE} · {UNIVERSITY} · {copyright_line()}"
+    return f'<div class="app-footer">{html.escape(text)}</div>'

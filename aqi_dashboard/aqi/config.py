@@ -14,8 +14,13 @@ AUTHOR = "Fauzia Dhiyaa' Farros"
 UNIVERSITY = "Universitas Sugeng Hartono"
 COPYRIGHT_YEAR = 2026
 
-LOGO_FILES = ("university_logo.png", "jktlogo.png")
-HERO_IMAGE = "jktimage.jpeg"
+LOGO_DIR = BASE_DIR / "assets" / "logo"
+BRAND_LOGOS = (  # (alt text, file stem) in display order; any image extension is accepted
+    ("Intel", "intellogo"),
+    ("Universitas Sugeng Hartono", "ushlogo"),
+    ("Pemerintah Provinsi DKI Jakarta", "jktlogo"),
+)
+HERO_PHOTO_STEM = "jktimage"
 
 
 POLLUTANTS = ("PM2.5", "PM10", "SO2", "CO", "O3", "NO2")
@@ -60,7 +65,7 @@ METEO_STATIONS = (
 
 
 def copyright_line() -> str:
-    return f"© {COPYRIGHT_YEAR} {AUTHOR} - {UNIVERSITY}"
+    return f"© {COPYRIGHT_YEAR} {AUTHOR}"
 
 
 # Indonesian ISPU / PM2.5 categories, used by the interactive AQI explorer.

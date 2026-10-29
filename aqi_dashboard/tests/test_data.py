@@ -104,3 +104,25 @@ class LoadersTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             with self.assertRaises(FileNotFoundError):
                 data.load_meteorology(Path(tmp))
+
+
+class LocateFileTest(unittest.TestCase):
+    def test_finds_file_in_root(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            Path(tmp, "aqi_meteo.csv").write_text("x")
+            self.assertEqual(data.locate_file("aqi_meteo.csv", [Path(tmp)]), Path(tmp, "aqi_meteo.csv"))
+
+    def test_finds_file_in_data_subfolder(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            Path(tmp, "data").mkdir()
+            Path(tmp, "data", "aqi_meteo.csv").write_text("x")
+            self.assertIsNotNone(data.locate_file("aqi_meteo.csv", [Path(tmp)]))
+
+    def test_tolerates_hidden_double_extension_and_case(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            Path(tmp, "AQI_Meteo.csv.csv").write_text("x")
+            self.assertEqual(data.locate_file("aqi_meteo.csv", [Path(tmp)]).name, "AQI_Meteo.csv.csv")
+
+    def test_returns_none_when_absent(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self.assertIsNone(data.locate_file("aqi_meteo.csv", [Path(tmp)]))

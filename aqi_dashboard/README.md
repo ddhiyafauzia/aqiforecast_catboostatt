@@ -1,6 +1,6 @@
 # AQI Intel — Spatiotemporal AQI Forecasting Dashboard (DKI Jakarta)
 
-© 2026 Fauzia Dhiyaa' Farros - Universitas Sugeng Hartono
+© 2026 Fauzia Dhiyaa' Farros
 
 ## Run
 ```bash
@@ -8,8 +8,7 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 Put `aqi_meteo.csv` and the `meteorology/` folder next to `app.py`.
-Optional: drop `university_logo.png`, `jktlogo.png`, `jktimage.jpeg` next to `app.py` to use your real logos/photo
-(otherwise the bundled USH emblem and animated skyline are used).
+Logos and hero photo: put `intellogo.png`, `ushlogo.png`, `jktlogo.png`, `jktimage.jpeg` in `assets/logo/`.
 
 ## Test
 ```bash
